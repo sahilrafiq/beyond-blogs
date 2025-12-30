@@ -1,5 +1,5 @@
 [phases.setup]
-nixPkgs = ['php83', 'php83Packages.composer']
+nixPkgs = ['php84', 'php84Packages.composer']
 
 [phases.install]
 cmds = ['composer install --no-dev --optimize-autoloader']
@@ -12,8 +12,3 @@ cmds = [
 
 [start]
 cmd = 'php artisan serve --host=0.0.0.0 --port=${PORT:-8000}'
-```
-
-**File 2: `backend/Procfile`** (no extension)
-```
-web: php artisan serve --host=0.0.0.0 --port=${PORT}
