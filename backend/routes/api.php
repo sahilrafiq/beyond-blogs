@@ -8,5 +8,8 @@ Route::get('/health', function () {
     return response()->json(['status' => 'ok']);
 });
 
+// Scrape route BEFORE resource routes
+Route::post('/articles/scrape', [ArticleController::class, 'scrape']);
+
+// Resource routes
 Route::apiResource('articles', ArticleController::class);
-Route::post('articles/scrape', [ArticleController::class, 'scrape']);

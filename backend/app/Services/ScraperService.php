@@ -151,43 +151,43 @@ class ScraperService
     }
 
     private function createSampleArticles()
-    {
-        return [
-            [
-                'title' => 'Understanding AI Chatbots in Customer Service',
-                'content' => 'AI chatbots are revolutionizing customer service by providing instant responses and 24/7 availability. They help businesses scale their support operations while maintaining quality.',
-                'url' => 'https://beyondchats.com/blogs/ai-chatbots',
-                'image_url' => null,
-                'published_date' => now(),
-            ],
-            [
-                'title' => 'The Future of Conversational AI',
-                'content' => 'Conversational AI is evolving rapidly with natural language processing and machine learning. Businesses are adopting these technologies to improve customer engagement.',
-                'url' => 'https://beyondchats.com/blogs/conversational-ai',
-                'image_url' => null,
-                'published_date' => now(),
-            ],
-            [
-                'title' => 'Best Practices for Chatbot Implementation',
-                'content' => 'Implementing a chatbot requires careful planning and understanding of user needs. This guide covers essential best practices for successful chatbot deployment.',
-                'url' => 'https://beyondchats.com/blogs/chatbot-best-practices',
-                'image_url' => null,
-                'published_date' => now(),
-            ],
-            [
-                'title' => 'How Chat Automation Improves Business Efficiency',
-                'content' => 'Chat automation streamlines business operations by handling repetitive queries automatically. This allows human agents to focus on complex issues that require personal attention.',
-                'url' => 'https://beyondchats.com/blogs/chat-automation',
-                'image_url' => null,
-                'published_date' => now(),
-            ],
-            [
-                'title' => 'Integrating Chatbots with CRM Systems',
-                'content' => 'Integrating chatbots with CRM systems creates a seamless customer experience. This integration enables better data collection and personalized interactions.',
-                'url' => 'https://beyondchats.com/blogs/chatbot-crm-integration',
-                'image_url' => null,
-                'published_date' => now(),
-            ]
-        ];
-    }
+{
+    return [
+        [
+            'title' => 'Understanding AI Chatbots in Customer Service',
+            'content' => 'AI chatbots are revolutionizing customer service by providing instant responses and 24/7 availability. They help businesses scale their support operations while maintaining quality. Modern chatbots use natural language processing to understand customer queries and provide relevant answers. They can handle multiple conversations simultaneously, reducing wait times and improving customer satisfaction. Integration with CRM systems allows chatbots to access customer history and provide personalized responses. Advanced AI chatbots can learn from interactions and improve over time, becoming more effective at resolving customer issues.',
+            'url' => 'https://beyondchats.com/blogs/ai-chatbots',
+            'image_url' => null,
+            'published_date' => now(),
+        ],
+        [
+            'title' => 'The Future of Conversational AI',
+            'content' => 'Conversational AI is evolving rapidly with natural language processing and machine learning. Businesses are adopting these technologies to improve customer engagement and streamline operations. The future of conversational AI includes more sophisticated understanding of context, emotion detection, and multilingual support. Voice-based assistants are becoming more common in homes and workplaces. AI-powered conversations are becoming indistinguishable from human interactions. Integration with IoT devices enables seamless control of smart environments through natural conversation.',
+            'url' => 'https://beyondchats.com/blogs/conversational-ai',
+            'image_url' => null,
+            'published_date' => now(),
+        ],
+        [
+            'title' => 'Best Practices for Chatbot Implementation',
+            'content' => 'Implementing a chatbot requires careful planning and understanding of user needs. This guide covers essential best practices for successful chatbot deployment. Start by identifying common customer queries and creating a knowledge base. Design conversation flows that feel natural and provide clear paths to resolution. Test thoroughly with real users before full deployment. Monitor performance metrics and gather feedback for continuous improvement. Ensure smooth handoff to human agents when needed. Train your team to work alongside AI assistants effectively.',
+            'url' => 'https://beyondchats.com/blogs/chatbot-best-practices',
+            'image_url' => null,
+            'published_date' => now(),
+        ],
+        [
+            'title' => 'How Chat Automation Improves Business Efficiency',
+            'content' => 'Chat automation streamlines business operations by handling repetitive queries automatically. This allows human agents to focus on complex issues that require personal attention. Automated responses reduce response time from hours to seconds. Businesses can handle higher volumes of inquiries without increasing staff. Chat automation provides consistent answers across all customer interactions. Analytics from automated conversations provide insights into customer needs and pain points. Integration with business systems enables automated task completion and information retrieval.',
+            'url' => 'https://beyondchats.com/blogs/chat-automation',
+            'image_url' => null,
+            'published_date' => now(),
+        ],
+        [
+            'title' => 'Integrating Chatbots with CRM Systems',
+            'content' => 'Integrating chatbots with CRM systems creates a seamless customer experience. This integration enables better data collection and personalized interactions. Chatbots can access customer history to provide context-aware responses. Automatic logging of conversations enriches customer profiles. Sales opportunities identified by chatbots can be automatically created in CRM. Support tickets can be generated and assigned based on conversation analysis. Real-time synchronization ensures all teams have access to latest customer interactions. Integration enables sophisticated workflows and automation across the customer journey.',
+            'url' => 'https://beyondchats.com/blogs/chatbot-crm-integration',
+            'image_url' => null,
+            'published_date' => now(),
+        ]
+    ];
+}
 }
