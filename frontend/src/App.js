@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { FileText, RefreshCw, Sparkles, Clock, Link2, ExternalLink, X } from 'lucide-react';
 
-const API_URL = 'http://localhost:8000/api';
+const API_URL = 'https://beyond-blogs-production.up.railway.app/api';
 
 function App() {
   const [articles, setArticles] = useState([]);
