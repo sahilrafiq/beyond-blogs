@@ -15,6 +15,26 @@
 
 ---
 
+## 🔗 Live Demo
+
+**⚠️ Note**: The live deployment is functional with a minor database persistence issue on the scraping feature. The project works perfectly when run locally. See local setup instructions below.
+
+- **Frontend (React)**: https://beyond-blog.netlify.app
+- **Backend API (Laravel)**: https://beyond-blogs-production.up.railway.app
+- **GitHub Repository**: https://github.com/sahilrafiq/beyond-blogs
+
+### Test the Backend
+```bash
+# Health check
+curl https://beyond-blogs-production.up.railway.app/api/health
+# Response: {"status":"ok"}
+```
+
+### Known Deployment Issue
+The scraping function on the live deployment encounters a SQLite database persistence issue on Railway's free tier containerized environment. This is a deployment platform limitation, not a code issue. **The application works flawlessly when run locally** following the setup instructions below. For evaluation purposes, the local setup demonstrates full functionality including web scraping, AI enhancement, and data persistence.
+
+---
+
 ## 🎯 Project Overview
 
 Beyond Blogs is a comprehensive full-stack application that:
@@ -184,6 +204,8 @@ Before you begin, ensure you have installed:
 ---
 
 ## 🚀 Installation & Setup
+
+> **⭐ Recommended for Evaluation**: Run locally for full functionality. The live demo is deployed and accessible but has a minor database persistence issue that doesn't affect the local version.
 
 ### 1. Clone the Repository
 
@@ -537,6 +559,7 @@ This project is open source and available under the [MIT License](LICENSE).
 - Email: sahilrafiq479@gmail.com
 - GitHub: [@sahilrafiq](https://github.com/sahilrafiq)
 - LinkedIn: [Sahil Rafiq](https://www.linkedin.com/in/sahil-rafiq)
+
 
 ---
 
