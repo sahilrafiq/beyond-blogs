@@ -27,14 +27,24 @@ COPY . .
 # Install dependencies
 RUN composer install --no-dev --optimize-autoloader
 
-# Create SQLite database
-RUN touch database/database.sqlite
+# Create data directory for persistent storage
+RUN mkdir -p /data
 
 # Set permissions
-RUN chmod -R 777 storage bootstrap/cache database
+RUN chmod -R 777 storage bootstrap/cache database /data
 
 # Expose port
 EXPOSE 8000
 
-# Start Laravel
-CMD php artisan serve --host=0.0.0.0 --port=${PORT:-8000}
+# Create startup script that initializes database
+RUN echo '#!/bin/sh\n\
+if [ ! -f /data/database.sqlite ]; then\n\
+    echo "Creating new database..."\n\
+    touch /data/database.sqlite\n\
+    php artisan migrate --force\n\
+fi\n\
+ln -sf /data/database.sqlite database/database.sqlite\n\
+php artisan serve --host=0.0.0.0 --port=${PORT:-8000}' > /start.sh && \
+chmod +x /start.sh
+
+CMD ["/start.sh"]
