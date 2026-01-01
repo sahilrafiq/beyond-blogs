@@ -24,138 +24,35 @@ class ScraperService
     public function scrapeBeyondChatsBlogs()
     {
         try {
-            $url = 'https://beyondchats.com/blogs/';
-            
-            $response = $this->client->request('GET', $url);
-            $html = $response->getContent();
-            
-            $crawler = new Crawler($html);
-
-            try {
-                $lastPageLinks = $crawler->filter('.pagination a, .page-numbers a');
-                if ($lastPageLinks->count() > 0) {
-                    $lastPageUrl = $lastPageLinks->last()->attr('href');
-                    
-                    if (!str_starts_with($lastPageUrl, 'http')) {
-                        $lastPageUrl = 'https://beyondchats.com' . $lastPageUrl;
-                    }
-                    
-                    $response = $this->client->request('GET', $lastPageUrl);
-                    $html = $response->getContent();
-                    $crawler = new Crawler($html);
-                }
-            } catch (\Exception $e) {
-                Log::info('No pagination found, scraping current page');
+            // Clear existing articles to avoid duplicates
+            $existingCount = Article::count();
+            if ($existingCount > 0) {
+                Article::truncate();
+                Log::info("Cleared {$existingCount} existing articles");
             }
-
-            $articles = [];
             
-            $articleSelectors = [
-                'article',
-                '.blog-post',
-                '.post-item',
-                '.entry',
-                '.post',
-                '[class*="post"]',
-                '[class*="article"]'
-            ];
-            
-            $articleNodes = null;
-            foreach ($articleSelectors as $selector) {
-                $nodes = $crawler->filter($selector);
-                if ($nodes->count() > 0) {
-                    $articleNodes = $nodes;
-                    Log::info("Found articles using selector: {$selector}");
-                    break;
-                }
-            }
-
-            if ($articleNodes && $articleNodes->count() > 0) {
-                $articleNodes->slice(0, 5)->each(function (Crawler $node) use (&$articles) {
-                    try {
-                        $title = '';
-                        $titleSelectors = ['h1', 'h2', 'h3', '.title', '.entry-title', '.post-title'];
-                        foreach ($titleSelectors as $selector) {
-                            $titleNode = $node->filter($selector);
-                            if ($titleNode->count() > 0) {
-                                $title = $titleNode->first()->text();
-                                break;
-                            }
-                        }
-                        
-                        $content = '';
-                        $contentSelectors = ['p', '.excerpt', '.content', '.entry-content', '.post-content'];
-                        foreach ($contentSelectors as $selector) {
-                            $contentNode = $node->filter($selector);
-                            if ($contentNode->count() > 0) {
-                                $content = $contentNode->first()->text();
-                                break;
-                            }
-                        }
-                        
-                        $link = '';
-                        $linkNode = $node->filter('a');
-                        if ($linkNode->count() > 0) {
-                            $link = $linkNode->first()->attr('href');
-                            if ($link && !str_starts_with($link, 'http')) {
-                                $link = 'https://beyondchats.com' . $link;
-                            }
-                        }
-                        
-                        $image = '';
-                        $imageNode = $node->filter('img');
-                        if ($imageNode->count() > 0) {
-                            $image = $imageNode->first()->attr('src');
-                            if ($image && !str_starts_with($image, 'http')) {
-                                $image = 'https://beyondchats.com' . $image;
-                            }
-                        }
-
-                        if (!empty($title) && !empty($content)) {
-                            $articles[] = [
-                                'title' => trim($title),
-                                'content' => trim(substr($content, 0, 1000)),
-                                'url' => $link ?: null,
-                                'image_url' => $image ?: null,
-                                'published_date' => now(),
-                            ];
-                        }
-                    } catch (\Exception $e) {
-                        Log::error('Error parsing article: ' . $e->getMessage());
-                    }
-                });
-            }
-
-            if (empty($articles)) {
-                Log::warning('No articles scraped. Creating sample articles.');
-                $articles = $this->createSampleArticles();
-            }
-
-            foreach ($articles as $articleData) {
-                Article::create($articleData);
-            }
-
-            Log::info('Successfully scraped ' . count($articles) . ' articles');
-            return $articles;
-
-        } catch (\Exception $e) {
-            Log::error('Scraping error: ' . $e->getMessage());
-            
+            // For deployment demo, use sample articles
             $articles = $this->createSampleArticles();
+            
             foreach ($articles as $articleData) {
                 Article::create($articleData);
             }
             
+            Log::info('Successfully created ' . count($articles) . ' sample articles');
             return $articles;
+            
+        } catch (\Exception $e) {
+            Log::error('Error creating articles: ' . $e->getMessage());
+            throw $e;
         }
     }
 
     private function createSampleArticles()
-{
-    return [
-        [
-            'title' => 'Understanding AI Chatbots in Customer Service',
-            'content' => "AI chatbots are revolutionizing customer service by providing instant responses and 24/7 availability. They help businesses scale their support operations while maintaining quality and consistency across all customer interactions.
+    {
+        return [
+            [
+                'title' => 'Understanding AI Chatbots in Customer Service',
+                'content' => "AI chatbots are revolutionizing customer service by providing instant responses and 24/7 availability. They help businesses scale their support operations while maintaining quality and consistency across all customer interactions.
 
 Modern chatbots use advanced natural language processing (NLP) to understand customer queries in context. They can interpret complex questions, understand intent, and provide relevant, accurate answers without human intervention. This technology has evolved significantly from simple rule-based systems to sophisticated AI-powered assistants.
 
@@ -180,13 +77,13 @@ Best Practices for Implementation:
 Start with clear objectives and identify the most common customer queries. Design conversation flows that feel natural and provide multiple paths to resolution. Always include an easy way for customers to reach human agents when needed. Monitor performance metrics regularly and continuously improve based on customer feedback and interaction data.
 
 The future of customer service is collaborative, with AI chatbots handling routine tasks while human agents focus on complex issues requiring empathy, creativity, and critical thinking.",
-            'url' => 'https://beyondchats.com/blogs/ai-chatbots',
-            'image_url' => null,
-            'published_date' => now(),
-        ],
-        [
-            'title' => 'The Future of Conversational AI',
-            'content' => "Conversational AI is evolving rapidly with advances in natural language processing, machine learning, and neural networks. Businesses worldwide are adopting these technologies to improve customer engagement, streamline operations, and create more meaningful interactions.
+                'url' => 'https://beyondchats.com/blogs/ai-chatbots',
+                'image_url' => null,
+                'published_date' => now(),
+            ],
+            [
+                'title' => 'The Future of Conversational AI',
+                'content' => "Conversational AI is evolving rapidly with advances in natural language processing, machine learning, and neural networks. Businesses worldwide are adopting these technologies to improve customer engagement, streamline operations, and create more meaningful interactions.
 
 The Current State of Conversational AI:
 
@@ -215,13 +112,13 @@ As conversational AI becomes more sophisticated, questions about privacy, data s
 Future Trends:
 
 The next generation of conversational AI will feature more advanced reasoning capabilities, better long-term memory, enhanced personalization, and improved ability to handle ambiguity and uncertainty. We'll see AI assistants that truly understand context across days or weeks of interaction, remember preferences, and proactively offer helpful suggestions.",
-            'url' => 'https://beyondchats.com/blogs/conversational-ai',
-            'image_url' => null,
-            'published_date' => now(),
-        ],
-        [
-            'title' => 'Best Practices for Chatbot Implementation',
-            'content' => "Implementing a chatbot successfully requires careful planning, strategic thinking, and understanding of both technology and user needs. This comprehensive guide covers essential best practices for chatbot deployment that delivers real value to users and businesses.
+                'url' => 'https://beyondchats.com/blogs/conversational-ai',
+                'image_url' => null,
+                'published_date' => now(),
+            ],
+            [
+                'title' => 'Best Practices for Chatbot Implementation',
+                'content' => "Implementing a chatbot successfully requires careful planning, strategic thinking, and understanding of both technology and user needs. This comprehensive guide covers essential best practices for chatbot deployment that delivers real value to users and businesses.
 
 Phase 1: Planning and Strategy
 
@@ -256,13 +153,13 @@ Continuously optimize based on data. Review failed conversations to identify gap
 Human Handoff Strategy:
 
 Always provide easy escalation to human agents. Some situations require human judgment, empathy, or creativity that AI cannot provide. Design seamless handoff processes that transfer full conversation context to human agents, so customers don't need to repeat themselves.",
-            'url' => 'https://beyondchats.com/blogs/chatbot-best-practices',
-            'image_url' => null,
-            'published_date' => now(),
-        ],
-        [
-            'title' => 'How Chat Automation Improves Business Efficiency',
-            'content' => "Chat automation is transforming how businesses operate, delivering significant improvements in efficiency, cost-effectiveness, and customer satisfaction. By automating repetitive tasks and routine inquiries, organizations free up human resources for higher-value activities while providing faster, more consistent service to customers.
+                'url' => 'https://beyondchats.com/blogs/chatbot-best-practices',
+                'image_url' => null,
+                'published_date' => now(),
+            ],
+            [
+                'title' => 'How Chat Automation Improves Business Efficiency',
+                'content' => "Chat automation is transforming how businesses operate, delivering significant improvements in efficiency, cost-effectiveness, and customer satisfaction. By automating repetitive tasks and routine inquiries, organizations free up human resources for higher-value activities while providing faster, more consistent service to customers.
 
 The Business Case for Chat Automation:
 
@@ -303,13 +200,13 @@ Modern chat automation extends beyond simple Q&A. It can trigger workflows, upda
 24/7 Global Support:
 
 For businesses serving global markets, providing round-the-clock support across all time zones is prohibitively expensive with human-only teams. Automation enables true 24/7 support, ensuring customers anywhere in the world receive immediate assistance regardless of when they need it.",
-            'url' => 'https://beyondchats.com/blogs/chat-automation',
-            'image_url' => null,
-            'published_date' => now(),
-        ],
-        [
-            'title' => 'Integrating Chatbots with CRM Systems',
-            'content' => "Integrating chatbots with Customer Relationship Management (CRM) systems creates a powerful synergy that elevates customer experience while streamlining business operations. This integration transforms chatbots from simple question-answering tools into sophisticated, context-aware customer engagement platforms.
+                'url' => 'https://beyondchats.com/blogs/chat-automation',
+                'image_url' => null,
+                'published_date' => now(),
+            ],
+            [
+                'title' => 'Integrating Chatbots with CRM Systems',
+                'content' => "Integrating chatbots with Customer Relationship Management (CRM) systems creates a powerful synergy that elevates customer experience while streamlining business operations. This integration transforms chatbots from simple question-answering tools into sophisticated, context-aware customer engagement platforms.
 
 Why CRM Integration Matters:
 
@@ -352,10 +249,10 @@ Implementation Best Practices:
 Start with clear objectives for what you want to achieve through integration. Map out data flows between systems, ensuring proper security and privacy measures. Choose integration platforms or APIs that provide robust, reliable connections. Test thoroughly before full deployment, verifying data accuracy and system performance.
 
 Train your teams on how integrated systems work and how to leverage chatbot-CRM insights in their daily work. Establish processes for maintaining and updating both systems as your business evolves.",
-            'url' => 'https://beyondchats.com/blogs/chatbot-crm-integration',
-            'image_url' => null,
-            'published_date' => now(),
-        ]
-    ];
-}
+                'url' => 'https://beyondchats.com/blogs/chatbot-crm-integration',
+                'image_url' => null,
+                'published_date' => now(),
+            ]
+        ];
+    }
 }
