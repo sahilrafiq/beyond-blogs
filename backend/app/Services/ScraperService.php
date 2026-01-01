@@ -78,7 +78,7 @@ Start with clear objectives and identify the most common customer queries. Desig
 
 The future of customer service is collaborative, with AI chatbots handling routine tasks while human agents focus on complex issues requiring empathy, creativity, and critical thinking.",
                 'url' => 'https://beyondchats.com/blogs/ai-chatbots',
-                'image_url' => null,
+                'image_url' => 'https://images.unsplash.com/photo-1531746790731-6c087fecd65a?w=800&q=80',
                 'published_date' => now(),
             ],
             [
@@ -113,7 +113,7 @@ Future Trends:
 
 The next generation of conversational AI will feature more advanced reasoning capabilities, better long-term memory, enhanced personalization, and improved ability to handle ambiguity and uncertainty. We'll see AI assistants that truly understand context across days or weeks of interaction, remember preferences, and proactively offer helpful suggestions.",
                 'url' => 'https://beyondchats.com/blogs/conversational-ai',
-                'image_url' => null,
+                'image_url' => 'https://images.unsplash.com/photo-1677442136019-21780ecad995?w=800&q=80',
                 'published_date' => now(),
             ],
             [
@@ -154,7 +154,7 @@ Human Handoff Strategy:
 
 Always provide easy escalation to human agents. Some situations require human judgment, empathy, or creativity that AI cannot provide. Design seamless handoff processes that transfer full conversation context to human agents, so customers don't need to repeat themselves.",
                 'url' => 'https://beyondchats.com/blogs/chatbot-best-practices',
-                'image_url' => null,
+                'image_url' => 'https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=800&q=80',
                 'published_date' => now(),
             ],
             [
@@ -201,7 +201,7 @@ Modern chat automation extends beyond simple Q&A. It can trigger workflows, upda
 
 For businesses serving global markets, providing round-the-clock support across all time zones is prohibitively expensive with human-only teams. Automation enables true 24/7 support, ensuring customers anywhere in the world receive immediate assistance regardless of when they need it.",
                 'url' => 'https://beyondchats.com/blogs/chat-automation',
-                'image_url' => null,
+                'image_url' => 'https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=800&q=80',
                 'published_date' => now(),
             ],
             [
@@ -250,7 +250,7 @@ Start with clear objectives for what you want to achieve through integration. Ma
 
 Train your teams on how integrated systems work and how to leverage chatbot-CRM insights in their daily work. Establish processes for maintaining and updating both systems as your business evolves.",
                 'url' => 'https://beyondchats.com/blogs/chatbot-crm-integration',
-                'image_url' => null,
+                'image_url' => 'https://images.unsplash.com/photo-1553877522-43269d4ea984?w=800&q=80',
                 'published_date' => now(),
             ]
         ];
