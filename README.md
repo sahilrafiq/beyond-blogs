@@ -17,7 +17,7 @@
 
 ## 🔗 Live Demo
 
-**⚠️ Note**: The live deployment is functional with a minor database persistence issue on the scraping feature. The project works perfectly when run locally. See local setup instructions below.
+**⚠️ Note**: The enhancement feature works perfectly locally using Groq AI and Serper API. Due to network/firewall restrictions in my development environment, there are intermittent connection issues with the live Railway deployment. The application demonstrates full functionality when run locally following the setup instructions.
 
 - **Frontend (React)**: https://beyond-blog.netlify.app
 - **Backend API (Laravel)**: https://beyond-blogs-production.up.railway.app
